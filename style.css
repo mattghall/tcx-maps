@@ -1,0 +1,53 @@
+/* General styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Ensure canvas takes full width */
+canvas {
+    margin-bottom: 20px;
+    width: 100%; /* Make it responsive */
+    height: auto; /* Adjust height automatically */
+}
+
+/* Graph container full width */
+.graph-container {
+    position: relative;
+    width: 100%; /* Ensure the graph container takes full width */
+    margin-bottom: 30px;
+}
+
+/* Button styling for download */
+.download-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.download-btn:hover {
+    background-color: rgb(41, 85, 39);
+}
+
+/* For better handling on smaller screens */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+}

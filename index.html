@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>TCX Map Maker</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta charset="utf-8" />
+    <link href="style.css" rel="stylesheet" />
+    <script>
+        // Define default colors
+        let mapBarColor = '#fc4c02';
+        let elevationBarColor = '#76c7c0';
+        let elevationLineColor = '#3498db';
+        let speedBarColor = '#f39c12';
+        let speedLineColor = '#e74c3c';
+        let barTransparency = 0;
+    </script>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">TCX Map Maker</a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+
+        <h1 class="text-center">TCX File Path Plotter</h1>
+        <p class="text-center">Upload a TCX file and visualize the path, elevation, and speed data.</p>
+
+        <!-- File Input -->
+        <div class="d-flex justify-content-center mb-3">
+            <input type="file" id="tcxFileInput" accept=".tcx" class="form-control w-100 w-md-50" />
+        </div>
+
+        <div class="container">
+            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Color Config</button>
+            <div id="demo" class="collapse">
+                <div class="card card-body">
+                    <div>
+                        <label for="mapBarColor">Map Bar Color:</label>
+                        <input type="color" id="mapBarColor" value="#fc4c02">
+                    </div>
+                    <div>
+                        <label for="barTransparency">Bar Transparency:</label>
+                        <input type="range" id="barTransparency" min="0" max="1" step="0.05" value="1">
+                    </div>
+                    <div>
+                        <label for="elevationBarColor">Elevation Bar Color:</label>
+                        <input type="color" id="elevationBarColor" value="#76c7c0">
+                    </div>
+                    <div>
+                        <label for="elevationLineColor">Elevation Line Color:</label>
+                        <input type="color" id="elevationLineColor" value="#3498db">
+                    </div>
+                    <div>
+                        <label for="speedBarColor">Speed Bar Color:</label>
+                        <input type="color" id="speedBarColor" value="#f39c12">
+                    </div>
+                    <div>
+                        <label for="speedLineColor">Speed Line Color:</label>
+                        <input type="color" id="speedLineColor" value="#e74c3c">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Canvas for the path -->
+        <div class="graph-container mb-4">
+            <canvas id="pathCanvas" class="img-fluid"></canvas>
+            <button class="download-btn" id="downloadPath">
+                <i data-feather="download"></i>
+            </button>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center mb-3">
+            <label for="displayTypeSelector" class="me-2">Display Type:</label>
+            <select id="displayTypeSelector" class="form-select w-md-25">
+                <option value="line">Line</option>
+                <option value="bar-points">Bar (Points)</option>
+                <option value="bar-time">Bar (Time)</option>
+                <option value="bar-distance">Bar (Distance)</option>
+            </select>
+        </div>
+
+        <!-- Map Range Selector (Start and End) -->
+        <div class="d-flex justify-content-center align-items-center mb-3">
+            <label for="mapRangeStart" class="me-2">Map Start:</label>
+            <input type="range" id="mapRangeStart" min="0" max="100" value="0" step="1"
+                class="form-range w-100 w-md-25 me-3" />
+            <label for="mapRangeEnd" class="me-2">Map End:</label>
+            <input type="range" id="mapRangeEnd" min="0" max="100" value="100" step="1"
+                class="form-range w-100 w-md-25" />
+            <span class="ms-2" id="mapRangeValue">0% - 100%</span>
+        </div>
+
+        <!-- Canvas for elevation over time -->
+        <div class="graph-container">
+            <canvas id="elevationCanvas"></canvas>
+            <button class="download-btn" id="downloadElevation">
+                <i data-feather="download"></i>
+            </button>
+        </div>
+
+        <!-- Data Range Selector -->
+        <div class="d-flex justify-content-center align-items-center mb-3">
+            <label for="dataRangeSelector" class="me-2">Data Granularity:</label>
+            <input type="range" id="dataRangeSelector" min="1" max="50" value="1" step="1"
+                class="form-range w-100 w-md-50" />
+            <span class="ms-2" id="dataRangeValue">1</span>
+        </div>
+
+        <!-- Canvas for speed over time -->
+        <div class="graph-container">
+            <canvas id="speedCanvas"></canvas>
+            <button class="download-btn" id="downloadSpeed">
+                <i data-feather="download"></i>
+            </button>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <p class="mb-0">© 2024 TCX Map Maker | Created with Bootstrap</p>
+    </footer>
+
+    <link href="dep/bootstrap.min.css.map" rel="stylesheet">
+    <link href="dep/bootstrap.min.css" rel="stylesheet">
+    <script src="dep/jquery-3.5.1.min.js"></script>
+    <script src="dep/bootstrap.min.js"></script>
+    <script src="dep/feather.min.js"></script>
+
+    <script src="js/utils.js"></script>
+    <script src="js/mapDisplay.js"></script>
+    <script src="js/dataDisplay.js"></script>
+    <script src="js/fileHandler.js"></script>
+
+    <script src="js/lineGraph.js"></script>
+    <script src="js/barPointsGraph.js"></script>
+    <script src="js/barTimeGraph.js"></script>
+    <script src="js/barDistanceGraph.js"></script>
+
+    <script>
+        feather.replace();  
+    </script>
+
+</body>
+
+</html>
