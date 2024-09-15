@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             debugLog("No file selected.");
         }
+        $("#hiddenBox").removeClass("d-none");
     }
 
     // Function to parse the TCX file and extract the required data

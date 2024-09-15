@@ -5,6 +5,28 @@
     <title>TCX Map Maker</title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
     <meta charset="utf-8" />
+
+    <!-- Facebook Meta -->
+    <meta content="https://mattghall.com/maps" property="og:url" />
+    <meta content="Matt Maps" property="og:title" />
+    <meta content="Make graphs from your activities" property="og:description" />
+    <meta content="http://mattghall.com/img/matt-banner.jpg" property="og:image" />
+    <!-- Twitter Meta -->
+    <meta content="summary_large_image" name="twitter:card" />
+    <meta content="Matt Maps" name="twitter:title" />
+    <meta content="mattghall.com/maps" name="twitter:url" />
+    <meta content="@MattGHall" name="twitter:site" />
+    <meta content="@MattGHall" name="twitter:creator" />
+    <meta content="Make graphs from your activities" name="twitter:description" />
+    <meta content="http://mattghall.com/img/matt-banner.jpg" name="twitter:image" />
+
+    <link href="favicon/apple-touch-icon.png" onError="this.onerror=null;this.src='favicon/apple-touch-icon.png';"
+        rel="apple-touch-icon" sizes="180x180" />
+    <link href="favicon/favicon-32x32.png" onError="this.onerror=null;this.src='favicon/favicon-32x32.png';" rel="icon"
+        sizes="32x32" type="image/png" />
+    <link href="favicon/favicon-16x16.png" onError="this.onerror=null;this.src='favicon/favicon-16x16.png';" rel="icon"
+        sizes="16x16" type="image/png" />
+
     <link href="style.css" rel="stylesheet" />
     <script>
         // Define default colors
@@ -26,17 +48,20 @@
     </nav>
 
     <div class="container mt-4">
-
-        <h1 class="text-center">TCX File Path Plotter</h1>
-        <p class="text-center">Upload a TCX file and visualize the path, elevation, and speed data.</p>
-
         <!-- File Input -->
-        <div class="d-flex justify-content-center mb-3">
-            <input type="file" id="tcxFileInput" accept=".tcx" class="form-control w-100 w-md-50" />
+        <div class="row">
+            <div class="col-6">
+                <input type="file" id="tcxFileInput" accept=".tcx" />
+
+            </div>
+            <div class="col-6">
+                <button type="button" class="btn btn-info w-100" data-toggle="collapse" data-target="#demo">Color
+                    Config</button>
+            </div>
         </div>
 
+
         <div class="container">
-            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Color Config</button>
             <div id="demo" class="collapse">
                 <div class="card card-body">
                     <div>
@@ -68,62 +93,61 @@
         </div>
 
         <!-- Canvas for the path -->
-        <div class="graph-container mb-4">
-            <canvas id="pathCanvas" class="img-fluid"></canvas>
-            <button class="download-btn" id="downloadPath">
-                <i data-feather="download"></i>
-            </button>
-        </div>
+        <div id="hiddenBox" class="d-none">
+            <div class="graph-container mb-4">
+                <canvas id="pathCanvas" class="img-fluid"></canvas>
+                <button class="download-btn" id="downloadPath">
+                    <i data-feather="download"></i>
+                </button>
+            </div>
 
-        <div class="d-flex justify-content-center align-items-center mb-3">
-            <label for="displayTypeSelector" class="me-2">Display Type:</label>
-            <select id="displayTypeSelector" class="form-select w-md-25">
-                <option value="line">Line</option>
-                <option value="bar-points">Bar (Points)</option>
-                <option value="bar-time">Bar (Time)</option>
-                <option value="bar-distance">Bar (Distance)</option>
-            </select>
-        </div>
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <label for="displayTypeSelector" class="me-2">Display Type:</label>
+                <select id="displayTypeSelector" class="form-select w-md-25">
+                    <option value="line">Line</option>
+                    <option value="bar-points">Bar (Points)</option>
+                    <option value="bar-time">Bar (Time)</option>
+                    <option value="bar-distance">Bar (Distance)</option>
+                </select>
+            </div>
 
-        <!-- Map Range Selector (Start and End) -->
-        <div class="d-flex justify-content-center align-items-center mb-3">
-            <label for="mapRangeStart" class="me-2">Map Start:</label>
-            <input type="range" id="mapRangeStart" min="0" max="100" value="0" step="1"
-                class="form-range w-100 w-md-25 me-3" />
-            <label for="mapRangeEnd" class="me-2">Map End:</label>
-            <input type="range" id="mapRangeEnd" min="0" max="100" value="100" step="1"
-                class="form-range w-100 w-md-25" />
-            <span class="ms-2" id="mapRangeValue">0% - 100%</span>
-        </div>
+            <!-- Map Range Selector (Start and End) -->
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <label for="mapRangeStart" class="me-2">Map Start:</label>
+                <input type="range" id="mapRangeStart" min="0" max="100" value="0" step="1"
+                    class="form-range w-100 w-md-25 me-3" />
+                <label for="mapRangeEnd" class="me-2">Map End:</label>
+                <input type="range" id="mapRangeEnd" min="0" max="100" value="100" step="1"
+                    class="form-range w-100 w-md-25" />
+                <span class="ms-2" id="mapRangeValue">0% - 100%</span>
+            </div>
 
-        <!-- Canvas for elevation over time -->
-        <div class="graph-container">
-            <canvas id="elevationCanvas"></canvas>
-            <button class="download-btn" id="downloadElevation">
-                <i data-feather="download"></i>
-            </button>
-        </div>
+            <!-- Canvas for elevation over time -->
+            <div class="graph-container">
+                <canvas id="elevationCanvas"></canvas>
+                <button class="download-btn" id="downloadElevation">
+                    <i data-feather="download"></i>
+                </button>
+            </div>
 
-        <!-- Data Range Selector -->
-        <div class="d-flex justify-content-center align-items-center mb-3">
-            <label for="dataRangeSelector" class="me-2">Data Granularity:</label>
-            <input type="range" id="dataRangeSelector" min="1" max="50" value="1" step="1"
-                class="form-range w-100 w-md-50" />
-            <span class="ms-2" id="dataRangeValue">1</span>
-        </div>
+            <!-- Data Range Selector -->
+            <div class="d-flex justify-content-center align-items-center mb-3">
+                <label for="dataRangeSelector" class="me-2">Data Granularity:</label>
+                <input type="range" id="dataRangeSelector" min="1" max="50" value="1" step="1"
+                    class="form-range w-100 w-md-50" />
+                <span class="ms-2" id="dataRangeValue">1</span>
+            </div>
 
-        <!-- Canvas for speed over time -->
-        <div class="graph-container">
-            <canvas id="speedCanvas"></canvas>
-            <button class="download-btn" id="downloadSpeed">
-                <i data-feather="download"></i>
-            </button>
+            <!-- Canvas for speed over time -->
+            <div class="graph-container">
+                <canvas id="speedCanvas"></canvas>
+                <button class="download-btn" id="downloadSpeed">
+                    <i data-feather="download"></i>
+                </button>
+            </div>
         </div>
     </div>
 
-    <footer class="bg-dark text-white text-center py-3 mt-4">
-        <p class="mb-0">© 2024 TCX Map Maker | Created with Bootstrap</p>
-    </footer>
 
     <link href="dep/bootstrap.min.css.map" rel="stylesheet">
     <link href="dep/bootstrap.min.css" rel="stylesheet">
@@ -146,5 +170,23 @@
     </script>
 
 </body>
+<div class="row justify-content-center bg-dark text-white" id="footer-row">
+    <div class="col-12 text-center px-1 px-md-2 pt-1" id="footer-title" style="">mattghall.com/maps - <span
+            class="version-span">1.0</span></div>
+    <div class="social text-center col-12 px-1 px-md-2 pb-1">
+        <div>
+            <a class="btn btn-outline-light btn-floating m-1" href="https://mattghall.com" role="button"
+                target="_blank"><i data-feather="home"></i></a>
+            <a class="btn btn-outline-light btn-floating m-1" href="https://twitter.com/mattghall" role="button"
+                target="_blank"><i data-feather="twitter"></i></a>
+            <a class="btn btn-outline-light btn-floating m-1" href="https://instagram.com/mattghall" role="button"
+                target="_blank"><i data-feather="instagram"></i></a>
+            <a class="btn btn-outline-light btn-floating m-1" href="https://linkedin.com/in/mattghall/" role="button"
+                target="_blank"><i data-feather="linkedin"></i></a>
+            <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/mattghall" role="button"
+                target="_blank"><i data-feather="github"></i></a>
+        </div>
+    </div>
+</div>
 
 </html>
